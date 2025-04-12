@@ -379,13 +379,13 @@ Set-ItemProperty -Path "HKCU:\Software\Policies\Microsoft\Windows\CloudContent" 
 Write-Host "Windows Tailored Experience [DISABLED]" -ForegroundColor Green
 
 ## 3.2.9 Sysinternals Installation
-Write-Host "3.2.9 Sysinternals" -ForegroundColor Green
-New-Item "C:/users/$env:username/Temp/" -ItemType Directory
-Invoke-WebRequest -Uri "https://download.sysinternals.com/files/PSTools.zip" -OutFile "C:/users/$env:username/PSTools.zip"
-Expand-Archive -Path "C:/users/$env:username/PSTools.zip" -DestinationPath "C:\Windows\System32" -Force
-Remove-Item "C:/users/$env:username/PSTools.zip" -Force
-Write-Host "Sysinternals Suite [INSTALLED]" -ForegroundColor Green
-Write-Host "Official Website: https://learn.microsoft.com/en-us/sysinternals/" -ForegroundColor Green
+#Write-Host "3.2.9 Sysinternals" -ForegroundColor Green
+#New-Item "C:/users/$env:username/Temp/" -ItemType Directory
+#Invoke-WebRequest -Uri "https://download.sysinternals.com/files/PSTools.zip" -OutFile "C:/users/$env:username/PSTools.zip"
+#Expand-Archive -Path "C:/users/$env:username/PSTools.zip" -DestinationPath "C:\Windows\System32" -Force
+#Remove-Item "C:/users/$env:username/PSTools.zip" -Force
+#Write-Host "Sysinternals Suite [INSTALLED]" -ForegroundColor Green
+#Write-Host "Official Website: https://learn.microsoft.com/en-us/sysinternals/" -ForegroundColor Green
 
 ## 3.3.0 Cortana
 Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Search" -Name "AllowCloudSearch" -Value "0" -Force | Out-Null
