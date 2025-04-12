@@ -391,8 +391,8 @@ Write-Host "Official Website: https://learn.microsoft.com/en-us/sysinternals/" -
 Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Search" -Name "AllowCloudSearch" -Value "0" -Force | Out-Null
 Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Search" -Name "AllowCortana" -Value "0" -Force | Out-Null
 Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Search" -Name "AllowCortanaAboveLock" -Value "0" -Force | Out-Null
-Get-AppxPackage -AllUsers Microsoft.549981C3F5F10 | Remove-AppxPackage | Out-Null
-Write-Host "3.3.0 Explorer: Cortana [DISABLED]" -ForegroundColor Green
+#Get-AppxPackage -AllUsers Microsoft.549981C3F5F10 | Remove-AppxPackage | Out-Null
+#Write-Host "3.3.0 Explorer: Cortana [DISABLED]" -ForegroundColor Green
 
 ## 3.4.0 Dynamic Lighting
 Set-ItemProperty -Path "HKCU:\Software\Microsoft\Lighting" -Name "AmbientLightingEnabled" -Value "0"
@@ -502,74 +502,6 @@ Write-Host "`n`n5.0 Quality of Life" -ForegroundColor Green
 
 <###################################### EXPLORER TWEAKS (Start) ######################################>
 
-Add "Open with Powershell 5.1 (Admin)" to Right Click Context Menu
-if((Test-Path -LiteralPath "HKLM:\SOFTWARE\Classes\Directory\Background\shell\PowerShellAsAdmin") -ne $true) {New-Item "HKLM:\SOFTWARE\Classes\Directory\Background\shell\PowerShellAsAdmin" -Force | Out-Null}
-if((Test-Path -LiteralPath "HKLM:\SOFTWARE\Classes\Directory\Background\shell\PowerShellAsAdmin\command") -ne $true) {New-Item "HKLM:\SOFTWARE\Classes\Directory\Background\shell\PowerShellAsAdmin\command" -Force | Out-Null}
-if((Test-Path -LiteralPath "HKLM:\SOFTWARE\Classes\Directory\shell\PowerShellAsAdmin") -ne $true) {New-Item "HKLM:\SOFTWARE\Classes\Directory\shell\PowerShellAsAdmin" -Force | Out-Null}
-if((Test-Path -LiteralPath "HKLM:\SOFTWARE\Classes\Directory\shell\PowerShellAsAdmin\command") -ne $true) {New-Item "HKLM:\SOFTWARE\Classes\Directory\shell\PowerShellAsAdmin\command" -Force | Out-Null}
-if((Test-Path -LiteralPath "HKLM:\SOFTWARE\Classes\Drive\shell\PowerShellAsAdmin") -ne $true) {New-Item "HKLM:\SOFTWARE\Classes\Drive\shell\PowerShellAsAdmin" -Force | Out-Null}
-if((Test-Path -LiteralPath "HKLM:\SOFTWARE\Classes\Drive\shell\PowerShellAsAdmin\command") -ne $true) {New-Item "HKLM:\SOFTWARE\Classes\Drive\shell\PowerShellAsAdmin\command" -Force | Out-Null}
-Remove-Item -LiteralPath "HKLM:\SOFTWARE\Classes\LibraryFolder\Background\shell\PowerShellAsAdmin" -Force | Out-Null
-if((Test-Path -LiteralPath "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System") -ne $true) {New-Item "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" -Force | Out-Null}
-New-ItemProperty -LiteralPath 'HKLM:\SOFTWARE\Classes\Directory\Background\shell\PowerShellAsAdmin' -Name '(default)' -Value 'Open with PowerShell (Admin)' -PropertyType String -Force | Out-Null
-Remove-ItemProperty -LiteralPath 'HKLM:\SOFTWARE\Classes\Directory\Background\shell\PowerShellAsAdmin' -Name 'Extended' -Force | Out-Null
-New-ItemProperty -LiteralPath 'HKLM:\SOFTWARE\Classes\Directory\Background\shell\PowerShellAsAdmin' -Name 'HasLUAShield' -Value "" -PropertyType String -Force | Out-Null
-New-ItemProperty -LiteralPath 'HKLM:\SOFTWARE\Classes\Directory\Background\shell\PowerShellAsAdmin' -Name 'Icon' -Value 'powershell.exe' -PropertyType String -Force | Out-Null
-New-ItemProperty -LiteralPath 'HKLM:\SOFTWARE\Classes\Directory\Background\shell\PowerShellAsAdmin\command' -Name '(default)' -Value 'powershell -WindowStyle Hidden -NoProfile -Command "Start-Process -Verb RunAs powershell.exe -ArgumentList \"-NoExit -Command Push-Location \\\"\"%V/\\\"\"\"' -PropertyType String -Force | Out-Null
-New-ItemProperty -LiteralPath 'HKLM:\SOFTWARE\Classes\Directory\shell\PowerShellAsAdmin' -Name '(default)' -Value 'Open with PowerShell (Admin)' -PropertyType String -Force | Out-Null
-Remove-ItemProperty -LiteralPath 'HKLM:\SOFTWARE\Classes\Directory\shell\PowerShellAsAdmin' -Name 'Extended' -Force | Out-Null
-New-ItemProperty -LiteralPath 'HKLM:\SOFTWARE\Classes\Directory\shell\PowerShellAsAdmin' -Name 'HasLUAShield' -Value "" -PropertyType String -Force | Out-Null
-New-ItemProperty -LiteralPath 'HKLM:\SOFTWARE\Classes\Directory\shell\PowerShellAsAdmin' -Name 'Icon' -Value 'powershell.exe' -PropertyType String -Force | Out-Null
-New-ItemProperty -LiteralPath 'HKLM:\SOFTWARE\Classes\Directory\shell\PowerShellAsAdmin\command' -Name '(default)' -Value 'powershell -WindowStyle Hidden -NoProfile -Command "Start-Process -Verb RunAs powershell.exe -ArgumentList \"-NoExit -Command Push-Location \\\"\"%V/\\\"\"\"' -PropertyType String -Force
-New-ItemProperty -LiteralPath 'HKLM:\SOFTWARE\Classes\Drive\shell\PowerShellAsAdmin' -Name '(default)' -Value 'Open with PowerShell (Admin)' -PropertyType String -Force | Out-Null
-Remove-ItemProperty -LiteralPath 'HKLM:\SOFTWARE\Classes\Drive\shell\PowerShellAsAdmin' -Name 'Extended' -Force | Out-Null
-New-ItemProperty -LiteralPath 'HKLM:\SOFTWARE\Classes\Drive\shell\PowerShellAsAdmin' -Name 'HasLUAShield' -Value "" -PropertyType String -Force | Out-Null
-New-ItemProperty -LiteralPath 'HKLM:\SOFTWARE\Classes\Drive\shell\PowerShellAsAdmin' -Name 'Icon' -Value 'powershell.exe' -PropertyType String -Force | Out-Null
-New-ItemProperty -LiteralPath 'HKLM:\SOFTWARE\Classes\Drive\shell\PowerShellAsAdmin\command' -Name '(default)' -Value 'powershell -WindowStyle Hidden -NoProfile -Command "Start-Process -Verb RunAs powershell.exe -ArgumentList \"-NoExit -Command Push-Location \\\"\"%V/\\\"\"\"' -PropertyType String -Force | Out-Null
-New-ItemProperty -LiteralPath 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System' -Name 'EnableLinkedConnections' -Value "1" -PropertyType DWord -Force | Out-Null
-Write-Host "Explorer: 'Open with PowerShell 5.1 (Admin)' - Right Click Context Menu [ADDED]" -ForegroundColor Green
-
-
-# Add "Open with Powershell 7 (Admin)" to Right Click Context Menu
-# Install PS7
-if (-not (Test-Path "C:\Program Files\PowerShell\7\pwsh.exe")) {
-    New-Item -Path "C:\PSTemp" -ItemType Directory | Out-Null
-    $PS7InstallerPath = "C:\PSTemp\PowerShell-7.msi"  # Version 7.3.9
-    $PS7InstallerURL = "https://github.com/PowerShell/PowerShell/releases/download/v7.5.0/PowerShell-7.5.0-win-x64.msi"
-    Invoke-WebRequest -Uri $PS7InstallerURL -OutFile $PS7InstallerPath
-    Start-Process -FilePath msiexec -ArgumentList "/i $PS7InstallerPath /qn" -Wait
-    Remove-Item -Path "C:\PSTemp" -Recurse -Force | Out-Null
-}
-# Add to Right Click Context Menu
-if((Test-Path -LiteralPath "HKLM:\SOFTWARE\Classes\Directory\Background\shell\PowerShell7AsAdmin") -ne $true) {New-Item "HKLM:\SOFTWARE\Classes\Directory\Background\shell\PowerShell7AsAdmin" -Force | Out-Null}
-if((Test-Path -LiteralPath "HKLM:\SOFTWARE\Classes\Directory\Background\shell\PowerShell7AsAdmin\command") -ne $true) {New-Item "HKLM:\SOFTWARE\Classes\Directory\Background\shell\PowerShell7AsAdmin\command" -Force | Out-Null}
-if((Test-Path -LiteralPath "HKLM:\SOFTWARE\Classes\Directory\shell\PowerShell7AsAdmin") -ne $true) {New-Item "HKLM:\SOFTWARE\Classes\Directory\shell\PowerShell7AsAdmin" -Force | Out-Null}
-if((Test-Path -LiteralPath "HKLM:\SOFTWARE\Classes\Directory\shell\PowerShell7AsAdmin\command") -ne $true) {New-Item "HKLM:\SOFTWARE\Classes\Directory\shell\PowerShell7AsAdmin\command" -Force | Out-Null}
-if((Test-Path -LiteralPath "HKLM:\SOFTWARE\Classes\Drive\shell\PowerShell7AsAdmin") -ne $true) {New-Item "HKLM:\SOFTWARE\Classes\Drive\shell\PowerShell7AsAdmin" -Force | Out-Null}
-if((Test-Path -LiteralPath "HKLM:\SOFTWARE\Classes\Drive\shell\PowerShell7AsAdmin\command") -ne $true) {New-Item "HKLM:\SOFTWARE\Classes\Drive\shell\PowerShell7AsAdmin\command" -Force | Out-Null}
-Remove-Item -LiteralPath "HKLM:\SOFTWARE\Classes\LibraryFolder\Background\shell\PowerShell7AsAdmin" -Force -ErrorAction "SilentlyContinue" | Out-Null
-New-ItemProperty -LiteralPath 'HKLM:\SOFTWARE\Classes\Directory\Background\shell\PowerShell7AsAdmin' -Name '(default)' -Value 'Open with PowerShell 7 (Admin)' -PropertyType String -Force | Out-Null
-Remove-ItemProperty -LiteralPath 'HKLM:\SOFTWARE\Classes\Directory\Background\shell\PowerShell7AsAdmin' -Name 'Extended' -Force -ErrorAction "SilentlyContinue" | Out-Null
-New-ItemProperty -LiteralPath 'HKLM:\SOFTWARE\Classes\Directory\Background\shell\PowerShell7AsAdmin' -Name 'HasLUAShield' -Value "" -PropertyType String -Force | Out-Null
-New-ItemProperty -LiteralPath 'HKLM:\SOFTWARE\Classes\Directory\Background\shell\PowerShell7AsAdmin' -Name 'Icon' -Value 'powershell.exe' -PropertyType String -Force | Out-Null
-New-ItemProperty -LiteralPath 'HKLM:\SOFTWARE\Classes\Directory\Background\shell\PowerShell7AsAdmin\command' -Name '(default)' -Value 'powershell -WindowStyle Hidden -NoProfile -Command "Start-Process -Verb RunAs pwsh.exe -ArgumentList \"-NoExit -Command Push-Location \\\"\"%V/\\\"\"\"' -PropertyType String -Force | Out-Null
-New-ItemProperty -LiteralPath 'HKLM:\SOFTWARE\Classes\Directory\shell\PowerShell7AsAdmin' -Name '(default)' -Value 'Open with PowerShell 7 (Admin)' -PropertyType String -Force | Out-Null
-Remove-ItemProperty -LiteralPath 'HKLM:\SOFTWARE\Classes\Directory\shell\PowerShell7AsAdmin' -Name 'Extended' -Force -ErrorAction "SilentlyContinue"  | Out-Null
-New-ItemProperty -LiteralPath 'HKLM:\SOFTWARE\Classes\Directory\shell\PowerShell7AsAdmin' -Name 'HasLUAShield' -Value "" -PropertyType String -Force | Out-Null
-New-ItemProperty -LiteralPath 'HKLM:\SOFTWARE\Classes\Directory\shell\PowerShell7AsAdmin' -Name 'Icon' -Value 'pwsh.exe' -PropertyType String -Force | Out-Null
-New-ItemProperty -LiteralPath 'HKLM:\SOFTWARE\Classes\Directory\shell\PowerShell7AsAdmin\command' -Name '(default)' -Value 'powershell -WindowStyle Hidden -NoProfile -Command "Start-Process -Verb RunAs pwsh.exe -ArgumentList \"-NoExit -Command Push-Location \\\"\"%V/\\\"\"\"' -PropertyType String -Force | Out-Null
-New-ItemProperty -LiteralPath 'HKLM:\SOFTWARE\Classes\Drive\shell\PowerShell7AsAdmin' -Name '(default)' -Value 'Open with PowerShell 7 (Admin)' -PropertyType String -Force | Out-Null
-Remove-ItemProperty -LiteralPath 'HKLM:\SOFTWARE\Classes\Drive\shell\PowerShell7AsAdmin' -Name 'Extended' -Force -ErrorAction "SilentlyContinue"  | Out-Null
-New-ItemProperty -LiteralPath 'HKLM:\SOFTWARE\Classes\Drive\shell\PowerShell7AsAdmin' -Name 'HasLUAShield' -Value "" -PropertyType String -Force | Out-Null
-New-ItemProperty -LiteralPath 'HKLM:\SOFTWARE\Classes\Drive\shell\PowerShell7AsAdmin' -Name 'Icon' -Value 'pwsh.exe' -PropertyType String -Force | Out-Null
-New-ItemProperty -LiteralPath 'HKLM:\SOFTWARE\Classes\Drive\shell\PowerShell7AsAdmin\command' -Name '(default)' -Value 'powershell -WindowStyle Hidden -NoProfile -Command "Start-Process -Verb RunAs pwsh.exe -ArgumentList \"-NoExit -Command Push-Location \\\"\"%V/\\\"\"\"' -PropertyType String -Force | Out-Null
-Write-Host "Explorer: 'Open with PowerShell 7 (Admin)' - Right Click Context Menu [ADDED]" -ForegroundColor Green
-
-# Add "Run as Different User" to Right Click Context Menu
-Remove-ItemProperty -LiteralPath 'HKLM:\SOFTWARE\Classes\exefile\shell\runasuser' -Name 'Extended' -Force | Out-Null
-New-ItemProperty -LiteralPath 'HKLM:\SOFTWARE\Classes\exefile\shell\runasuser' -Name 'Icon' -Value 'imageres.dll,-5203' -PropertyType String -Force | Out-Null
-Write-Host "Explorer: 'Run as different user' - Right Click Context Menu [ADDED]" -ForegroundColor Green
-
 # Add "Copy as Path" to Right Click Context Menu
 if((Test-Path -LiteralPath "HKLM:\SOFTWARE\Classes\Allfilesystemobjects\shell\windows.copyaspath") -ne $true) {New-Item "HKLM:\SOFTWARE\Classes\Allfilesystemobjects\shell\windows.copyaspath" -Force | Out-Null}
 New-ItemProperty -LiteralPath 'HKLM:\SOFTWARE\Classes\Allfilesystemobjects\shell\windows.copyaspath' -Name '(default)' -Value 'Copy &as path' -PropertyType String -Force | Out-Null
@@ -612,10 +544,6 @@ Write-Host "Explorer: Feedback Notifications [DISABLED]" -ForegroundColor Green
 Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "HideFileExt" -Value "0" | Out-Null
 Write-Host "Explorer: Display of Known File Extensions [ENABLED]" -ForegroundColor Green
 
-if((Test-Path -LiteralPath "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer") -ne $true) {New-Item "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer" -Force }
-New-ItemProperty -LiteralPath 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer' -Name 'ShowFrequent' -Value "0" -PropertyType DWord -Force | Out-Null
-Write-Host "Explorer: 'Recent Folders' in Quick Access [DISABLED]" -ForegroundColor Green
-
 # Remove Widgets/Install App Installer (app)/winget
 # Reinstall Source: https://apps.microsoft.com/detail/windows-web-experience-pack/9MSSGKG348SP?hl=en-us&gl=US
 Add-AppxPackage -RegisterByFamilyName -MainPackage Microsoft.DesktopAppInstaller_8wekyb3d8bbwe | Out-Null
@@ -623,9 +551,6 @@ winget uninstall --accept-source-agreements "Windows web experience pack" | Out-
 New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Dsh" -Force | Out-Null
 New-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Dsh" -Name "AllowNewsAndInterests" -PropertyType DWord -Value 0 -Force | Out-Null
 Write-Host "Explorer: Widgets [REMOVED]" -ForegroundColor Green
-
-New-ItemProperty -LiteralPath 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\System' -Name 'DisableLogonBackgroundImage' -Value "1" -PropertyType "DWord" -Force | Out-Null
-Write-Host "Explorer: Background on Login Screen [DISABLED]" -ForegroundColor Green
 
 # Source: https://www.kapilarya.com/disable-tips-and-suggestions-notifications-in-windows-11
 Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\CloudContent" -Name "DisableSoftLanding" -Value "1" -Force | Out-Null
@@ -653,10 +578,6 @@ Write-Host "Explorer: Animations - Window Opening/Closing [DISABLED]" -Foregroun
 # Settings > Accessibility > Visual Effects > Transparency Effects
 Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize" -Name "EnableTransparency" -Value "0" | Out-Null
 Write-Host "Explorer: Windows Transparency [DISABLED]" ForegroundColor Green
-
-# Source: https://www.neowin.net/news/microsoft-windows-11-also-haunted-by-this-sata-bios-bug-just-like-windows-7-8-81-and-10/
-New-ItemProperty -LiteralPath 'HKLM:\SYSTEM\CurrentControlSet\Services\storahci\Parameters\Device' -Name 'TreatAsInternalPort' -Value @("0") -PropertyType MultiString -Force | Out-Null
-Write-Host "Explorer: 'Safely Remove and Eject Media' for Intenal Drives [DISABLED]" -ForegroundColor Green
 
 Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\AppHost" -Name "EnableWebContentEvaluation" -Value "0" -Force | Out-Null
 Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System" -Name "EnableSmartScreen" -Value "0" -Type DWORD -Force | Out-Null
@@ -693,118 +614,6 @@ if (!(Test-Path $key)) {
     Write-Host "Explorer: File .JFIF to .JPG Conversion [ADDED (Previously)]" -ForegroundColor Green
 }
 
-# Right Click Context Menu "Add Watermark"
-$scriptDir = "C:\ProgramData\AV\Watermark"
-if (-not (Test-Path -Path $scriptDir)) {
-    New-Item -Path $scriptDir -ItemType Directory -Force
-}
-
-$scriptContent = @'
-Add-Type -AssemblyName System.Drawing
-
-function Resize-AndAddWatermark {
-    param (
-        [string]$imagePath
-    )
-
-    # Load image
-    $image = [System.Drawing.Image]::FromFile($imagePath)
-
-    # Resize image
-    $newWidth = 800
-    $newHeight = 600
-    $resizedImage = New-Object System.Drawing.Bitmap $image, $newWidth, $newHeight
-
-    # Create graphics object
-    $graphics = [System.Drawing.Graphics]::FromImage($resizedImage)
-    $graphics.SmoothingMode = [System.Drawing.Drawing2D.SmoothingMode]::AntiAlias
-    $graphics.Clear([System.Drawing.Color]::White)
-
-    # Draw the image onto the resized image
-    $graphics.DrawImage($image, 0, 0, $newWidth, $newHeight)
-
-    # Set watermark text properties
-    $font = New-Object System.Drawing.Font("Arial", 120, [System.Drawing.FontStyle]::Bold)
-    $brush = New-Object System.Drawing.SolidBrush([System.Drawing.Color]::FromArgb(50, 255, 255, 255)) # Semi-transparent white
-
-    # Draw main centered watermark text
-    $mainText = "PREVIEW"
-    $textWidth = $graphics.MeasureString($mainText, $font).Width
-    $textHeight = $graphics.MeasureString($mainText, $font).Height
-    $centerX = ($newWidth - $textWidth) / 2
-    $centerY = ($newHeight - $textHeight) / 2
-    $graphics.DrawString($mainText, $font, $brush, $centerX, $centerY)
-
-    # Tiled and distorted watermark text
-    $tileFont = New-Object System.Drawing.Font("Arial", 50, [System.Drawing.FontStyle]::Bold)
-    $tileBrush = New-Object System.Drawing.SolidBrush([System.Drawing.Color]::FromArgb(30, 255, 255, 255)) # Lighter transparency
-
-    $tileWidth = 200
-    $tileHeight = 100
-    for ($y = 0; $y -lt $newHeight; $y += $tileHeight) {
-        for ($x = 0; $x -lt $newWidth; $x += $tileWidth) {
-            # Apply random rotation and scaling
-            $angle = (Get-Random -Minimum -15 -Maximum 15)
-            $scale = (Get-Random -Minimum 0.8 -Maximum 1.2)
-
-            # Create a transformation matrix
-            $matrix = New-Object System.Drawing.Drawing2D.Matrix
-            $matrix.RotateAt($angle, [System.Drawing.PointF]::new($x + $tileWidth / 2, $y + $tileHeight / 2))
-            $matrix.Scale($scale, $scale)
-
-            # Apply the transformation
-            $graphics.Transform = $matrix
-            $graphics.DrawString($mainText, $tileFont, $tileBrush, $x, $y)
-            $graphics.ResetTransform()
-        }
-    }
-
-    # Save the output image
-    $directory = [System.IO.Path]::GetDirectoryName($imagePath)
-    $fileName = [System.IO.Path]::GetFileNameWithoutExtension($imagePath)
-    $outputPath = Join-Path -Path $directory -ChildPath ("$fileName`_resized.jpg")
-
-    $counter = 1
-    while (Test-Path $outputPath) {
-        $outputPath = Join-Path -Path $directory -ChildPath ("$fileName`_resized($counter).jpg")
-        $counter++
-    }
-
-    $resizedImage.Save($outputPath, [System.Drawing.Imaging.ImageFormat]::Jpeg)
-
-    # Clean up
-    $graphics.Dispose()
-    $resizedImage.Dispose()
-    $image.Dispose()
-}
-
-Resize-AndAddWatermark -imagePath $args[0]
-'@
-
-$scriptPath = Join-Path -Path $scriptDir -ChildPath "ResizeAndAddWatermark.ps1"
-$scriptContent | Out-File -FilePath $scriptPath -Force
-
-$regPathJPG = "HKCU:\Software\Classes\SystemFileAssociations\.jpg\shell\AddWatermark"
-$regPathPNG = "HKCU:\Software\Classes\SystemFileAssociations\.png\shell\AddWatermark"
-
-$regKeys = @($regPathJPG, $regPathPNG)
-
-foreach ($key in $regKeys) {
-    if (-not (Test-Path $key)) {
-        New-Item -Path $key -Force
-    }
-
-    Set-ItemProperty -Path $key -Name "(Default)" -Value "Add Watermark"
-
-    $commandKeyPath = "$key\command"
-    if (-not (Test-Path $commandKeyPath)) {
-        New-Item -Path $commandKeyPath -Force
-    }
-
-    Set-ItemProperty -Path $commandKeyPath -Name "(Default)" -Value "powershell.exe -ExecutionPolicy Bypass -File `"$scriptPath`" `"%1`""
-    Set-ItemProperty -Path $key -Name "Icon" -Value "shell32.dll,43"
-}
-Write-Host "Explorer: .JPG/.PNG 'Add Watermark' [ADDED]" -ForegroundColor Green
 <###################################### EXPLORER TWEAKS (End) ######################################>
 
 
@@ -1160,10 +969,7 @@ if((Test-Path -LiteralPath "HKCU:\Software\Microsoft\Input\TIPC") -ne $true) {Ne
 New-ItemProperty -LiteralPath 'HKCU:\Software\Microsoft\Input\TIPC' -Name 'Enabled' -Value "0" -PropertyType DWord -Force | Out-Null
 Write-Host "Keyboard - Improved Inking and Typing Reconition [DISABLED]" -ForegroundColor Green
 
-Write-Host "7.3 Clipboard" -ForegroundColor Green
-if((Test-Path -LiteralPath "HKCU:\Software\Microsoft\Windows\CurrentVersion\SmartActionPlatform\SmartClipboard") -ne $true) {New-Item "HKCU:\Software\Microsoft\Windows\CurrentVersion\SmartActionPlatform\SmartClipboard" -Force | Out-Null};
-New-ItemProperty -LiteralPath 'HKCU:\Software\Microsoft\Windows\CurrentVersion\SmartActionPlatform\SmartClipboard' -Name 'Disabled' -Value "1" -PropertyType DWord -Force | Out-Null
-Write-Host "Clipboard - 'Smart Clipboard' [DISABLED]" -ForegroundColor Green
+
 
 Write-Host "7.4 Telemetry" -ForegroundColor Green #InTune Required
 # Disable Tailored Experiences With Diagnostic Data
